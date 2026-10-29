@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aru – Webseiten, IT-Hilfe und Tools aus Bern</title>
+<meta name="description" content="Webseiten erstellen, IT-Support für Private und kleine Firmen und massgeschneiderte Tools – aus Bern.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #121923;
+    --panel: #1A2431;
+    --line: #2A3747;
+    --text: #E4E8EE;
+    --muted: #94A1B3;
+    --signal: #F2B544;   /* Status-LED-Amber */
+    --ok: #7FD1A8;
+    --radius-s: 4px;
+    --radius-l: 14px;
+    --wrap: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--text);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-variation-settings: "wdth" 100;
+  }
+  a { color: var(--signal); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: var(--radius-s); }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
+
+  /* Kopfzeile */
+  header.top { border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 800; font-size: 1.25rem; font-variation-settings: "wdth" 125; color: var(--text); text-decoration: none; letter-spacing: .01em; }
+  .logo span { color: var(--signal); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: .95rem; }
+  nav a:hover { color: var(--text); }
+  @media (max-width: 640px) { nav a:not(.nav-cta) { display: none; } }
+  .nav-cta { color: var(--ink) !important; background: var(--signal); padding: 7px 14px; border-radius: var(--radius-s); font-weight: 600; }
+
+  /* Hero */
+  .hero { padding: 72px 0 64px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+  h1 {
+    font-size: clamp(2.3rem, 5.5vw, 4rem);
+    line-height: 1.02;
+    font-weight: 800;
+    font-variation-settings: "wdth" 118;
+    margin: 0 0 22px;
+    max-width: 15ch;
+  }
+  .lead { color: var(--muted); max-width: 52ch; margin: 0 0 30px; font-size: 1.15rem; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: var(--radius-s); font-weight: 600; text-decoration: none; }
+  .btn-main { background: var(--signal); color: var(--ink); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--muted); }
+
+  /* Server-Konsole: das eine auffällige Element */
+  .console {
+    background: #0D131B;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: .88rem;
+  }
+  .console-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+  .led { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .console pre { margin: 0; padding: 18px; min-height: 248px; white-space: pre-wrap; color: #C7D0DC; }
+  .console .p { color: var(--signal); }
+  .console .g { color: var(--ok); }
+  .cursor { display: inline-block; width: 8px; height: 1em; background: var(--signal); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+
+  /* Abschnitte */
+  section { padding: 72px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 750; font-variation-settings: "wdth" 112; margin: 0 0 12px; line-height: 1.1; }
+  .intro { color: var(--muted); max-width: 60ch; margin: 0 0 40px; }
+
+  /* Angebote als Zeilen statt Karten */
+  .offers { list-style: none; margin: 0; padding: 0; }
+  .offer { display: grid; grid-template-columns: 1fr 1.4fr auto; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .offer:first-child { border-top: 1px solid var(--line); }
+  @media (max-width: 800px) { .offer { grid-template-columns: 1fr; gap: 10px; } }
+  .offer h3 { margin: 0; font-size: 1.4rem; font-weight: 700; font-variation-settings: "wdth" 110; }
+  .offer .for { color: var(--muted); font-size: .95rem; margin: 6px 0 0; }
+  .offer ul { margin: 0; padding-left: 18px; }
+  .offer li { margin-bottom: 4px; }
+  .price { white-space: nowrap; color: var(--signal); font-weight: 600; }
+
+  /* Ablauf: echte Reihenfolge, daher nummeriert */
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; list-style: none; padding: 0; margin: 0; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+  .steps li { counter-increment: s; border-left: 2px solid var(--line); padding: 2px 0 2px 16px; }
+  .steps li::before { content: counter(s); display: block; font-weight: 800; font-size: 1.6rem; color: var(--signal); font-variation-settings: "wdth" 125; line-height: 1.2; }
+  .steps strong { display: block; margin-bottom: 4px; }
+  .steps p { margin: 0; color: var(--muted); font-size: .97rem; }
+
+  /* Über mich */
+  .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; }
+  @media (max-width: 800px) { .about { grid-template-columns: 1fr; } }
+  .facts { background: var(--panel); border-radius: var(--radius-l); padding: 24px; margin: 0; }
+  .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .facts div:last-child { border-bottom: 0; }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; text-align: right; }
+
+  /* Kontakt */
+  .contact { background: var(--panel); border-radius: var(--radius-l); padding: 40px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .contact p { margin: 0; color: var(--muted); max-width: 48ch; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: .92rem; }
+  footer .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 700px) { footer .wrap { grid-template-columns: 1fr; } }
+  footer h4 { color: var(--text); margin: 0 0 8px; font-size: 1rem; }
+  footer p { margin: 0 0 6px; }
+  .todo { background: rgba(242,181,68,.15); color: var(--signal); padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">aru<span>.</span></a>
+    <nav>
+      <a href="#angebote">Angebote</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a class="nav-cta" href="#kontakt">Anfrage senden</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Webseiten, IT-Hilfe und eigene Tools aus Bern.</h1>
+        <p class="lead">Ich baue Webseiten, richte Computer und Netzwerke ein und entwickle kleine Programme, die einen Arbeitsablauf einfacher machen. Persönlich, verständlich erklärt und zu fairen Preisen.</p>
+        <div class="btns">
+          <a class="btn btn-main" href="#kontakt">Projekt besprechen</a>
+          <a class="btn btn-ghost" href="#angebote">Angebote ansehen</a>
+        </div>
+      </div>
+
+      <div class="console" aria-label="Beispiel einer Server-Konsole">
+        <div class="console-bar"><span class="led" aria-hidden="true"></span>aru@webserver – diese Seite läuft auf meinem eigenen Server</div>
+        <pre id="term" aria-hidden="true"></pre>
+      </div>
+    </div>
+  </div>
+
+  <section id="angebote">
+    <div class="wrap">
+      <h2>Angebote</h2>
+      <p class="intro">Drei Bereiche, in denen ich dir helfen kann. Jedes Projekt beginnt mit einem kostenlosen Gespräch, danach bekommst du eine klare Offerte.</p>
+      <ul class="offers">
+        <li class="offer">
+          <div>
+            <h3>Webseiten erstellen</h3>
+            <p class="for">Für Vereine, kleine Firmen und Selbständige</p>
+          </div>
+          <ul>
+            <li>Moderne Webseite, die auf Handy und PC gut aussieht</li>
+            <li>Bestehende Webseite neu gestalten</li>
+            <li>Hosting, Domain und HTTPS einrichten</li>
+          </ul>
+          <span class="price">Preis auf Anfrage</span>
+        </li>
+        <li class="offer">
+          <div>
+            <h3>IT-Support und PC-Hilfe</h3>
+            <p class="for">Für Privatpersonen und kleine Büros</p>
+          </div>
+          <ul>
+            <li>Neuen Computer einrichten, Daten übertragen</li>
+            <li>WLAN, Drucker und Backups einrichten</li>
+            <li>Langsamen PC aufräumen, Sicherheit prüfen</li>
+          </ul>
+          <span class="price">Preis auf Anfrage</span>
+        </li>
+        <li class="offer">
+          <div>
+            <h3>Eigene Tools und Apps</h3>
+            <p class="for">Wenn Excel und Papier nicht mehr reichen</p>
+          </div>
+          <ul>
+            <li>Kleine Web-Apps für einen bestimmten Ablauf, z. B. ein digitales Logbuch</li>
+            <li>Formulare, Listen und Auswertungen automatisieren</li>
+            <li>Läuft im Browser, ohne Installation</li>
+          </ul>
+          <span class="price">Preis auf Anfrage</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ablauf">
+    <div class="wrap">
+      <h2>So läuft ein Auftrag ab</h2>
+      <p class="intro">Du weisst immer, was als Nächstes passiert und was es kostet.</p>
+      <ol class="steps">
+        <li><strong>Gespräch</strong><p>Du erzählst mir, was du brauchst. Kostenlos und unverbindlich.</p></li>
+        <li><strong>Offerte</strong><p>Du bekommst einen klaren Vorschlag mit Preis und Termin.</p></li>
+        <li><strong>Umsetzung</strong><p>Ich setze um und zeige dir Zwischenstände, damit du mitreden kannst.</p></li>
+        <li><strong>Übergabe</strong><p>Ich erkläre dir alles und bleibe bei Fragen erreichbar.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="ueber-mich">
+    <div class="wrap about">
+      <div>
+        <h2>Über mich</h2>
+        <p>Ich bin Aru und mache meine Ausbildung im Bereich ICT in Bern. Ich arbeite gerne mit Linux-Servern, Netzwerken und Webentwicklung, und diese Webseite läuft auf einem Server, den ich selbst eingerichtet habe.</p>
+        <p>Mir ist wichtig, dass du verstehst, was ich mache. Ich erkläre Technik ohne Fachchinesisch und auf Wunsch auch auf Englisch oder Tamil.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Standort</dt><dd>Bern</dd></div>
+        <div><dt>Sprachen</dt><dd>Deutsch, Englisch, Tamil</dd></div>
+        <div><dt>Schwerpunkte</dt><dd>Web, Linux, Netzwerk</dd></div>
+        <div><dt>Antwortzeit</dt><dd>meist innert 2 Tagen</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Anfrage senden</h2>
+          <p>Schreib mir kurz, worum es geht. Ich melde mich mit einem Terminvorschlag für ein erstes Gespräch.</p>
+        </div>
+        <a class="btn btn-main" href="mailto:kontakt@example.ch?subject=Anfrage%20%C3%BCber%20die%20Webseite">E-Mail schreiben</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div id="impressum">
+      <h4>Impressum</h4>
+      <p>Aru <span class="todo">[Nachname]</span></p>
+      <p><span class="todo">[Strasse Nr.]</span>, <span class="todo">[PLZ]</span> Bern, Schweiz</p>
+      <p>E-Mail: <span class="todo">kontakt@example.ch</span></p>
+    </div>
+    <div id="datenschutz">
+      <h4>Datenschutz</h4>
+      <p>Diese Webseite verwendet keine Cookies und kein Tracking. Wenn du mir eine E-Mail schreibst, nutze ich deine Angaben nur, um deine Anfrage zu beantworten.</p>
+      <p>Schriften werden von Google Fonts geladen. <span class="todo">[vor Livegang lokal einbinden]</span></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Einmalige Tipp-Animation in der Konsole; bei "weniger Bewegung" sofort vollständig
+  (function () {
+    var lines = [
+      ['p', 'aru@webserver:~$ ', 'uptime -p'],
+      ['', '', 'up 42 days, 6 hours'],
+      ['p', 'aru@webserver:~$ ', 'systemctl is-active nginx'],
+      ['g', '', 'active'],
+      ['p', 'aru@webserver:~$ ', 'sudo ufw status | head -1'],
+      ['g', '', 'Status: active'],
+      ['p', 'aru@webserver:~$ ', 'echo "Bereit für dein Projekt"'],
+      ['', '', 'Bereit für dein Projekt']
+    ];
+    var el = document.getElementById('term');
+    function html(l) {
+      var pre = l[1] ? '<span class="p">' + l[1] + '</span>' : '';
+      var body = l[0] === 'g' ? '<span class="g">' + l[2] + '</span>' : l[2];
+      return pre + body;
+    }
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      el.innerHTML = lines.map(html).join('\n') + '\n<span class="p">aru@webserver:~$ </span><span class="cursor"></span>';
+      return;
+    }
+    var done = '', i = 0, c = 0;
+    function tick() {
+      if (i >= lines.length) {
+        el.innerHTML = done + '<span class="p">aru@webserver:~$ </span><span class="cursor"></span>';
+        return;
+      }
+      var l = lines[i];
+      if (!l[1]) { done += html(l) + '\n'; i++; el.innerHTML = done; setTimeout(tick, 260); return; }
+      c++;
+      el.innerHTML = done + '<span class="p">' + l[1] + '</span>' + l[2].slice(0, c) + '<span class="cursor"></span>';
+      if (c >= l[2].length) { done += html(l) + '\n'; i++; c = 0; setTimeout(tick, 380); }
+      else setTimeout(tick, 38);
+    }
+    setTimeout(tick, 500);
+  })();
+</script>
+</body>
+</html>
