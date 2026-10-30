@@ -17,7 +17,17 @@ a{color:#0F766E}a:hover{color:#16181D}
 <style>
 html{scroll-behavior:smooth}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #0F766E;outline-offset:3px}
-@media (max-width:600px){h1{font-size:44px!important}}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+@media (max-width:600px){
+h1{font-size:44px!important}
+.rate-card{padding:28px!important}
+.rate-price{font-size:48px!important}
+.rate-facts{grid-template-columns:1fr!important;gap:0!important}
+.rate-facts>div{flex-direction:row!important;justify-content:space-between;align-items:baseline;gap:16px!important;padding:12px 0;border-top:1px solid #33363D}
+.rate-facts>div>span:last-child{text-align:right}
+.rate-facts>div:first-child{border-top:0;padding-top:0}
+}
 </style>
 </head>
 <body>
@@ -36,7 +46,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 </div>
 </header>
 
-<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px; align-items: center">
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px; align-items: center">
 <div style="display: flex; flex-direction: column; gap: 24px">
 <p style="margin: 0; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #4A4D55">IT-Hilfe für Privatpersonen · Bern</p>
 <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 64px; line-height: 1.05; letter-spacing: -0.02em">Ihre IT läuft.<br>Sie verstehen sie.</h1>
@@ -46,14 +56,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <a href="#preise" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 8px; border: 1.5px solid #16181D; color: #16181D; text-decoration: none; font-weight: 600; font-size: 16px">Preise ansehen</a>
 </div>
 </div>
-<div style="background: #16181D; color: #F6F5F1; border-radius: 16px; padding: 40px; display: flex; flex-direction: column; gap: 28px">
+<div class="rate-card" style="background: #16181D; color: #F6F5F1; border-radius: 16px; padding: 40px; display: flex; flex-direction: column; gap: 28px">
 <div style="display: flex; flex-direction: column; gap: 4px">
 <span style="font-size: 14px; color: #B9BCC4">Stundenansatz</span>
-<span style="font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; line-height: 1">CHF 65</span>
+<span class="rate-price" style="font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; line-height: 1">CHF 65</span>
 <span style="font-size: 15px; color: #B9BCC4">pro Stunde · faire Preise, Abrechnung pro 15 Min.</span>
 </div>
 <div style="height: 1px; background: #33363D"></div>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div class="rate-facts" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
 <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Vor Ort</span><span style="font-size: 14px; color: #B9BCC4">Region Bern</span></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Remote</span><span style="font-size: 14px; color: #B9BCC4">per Fernwartung</span></div>
 <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">DE · EN · தமிழ்</span><span style="font-size: 14px; color: #B9BCC4">drei Sprachen</span></div>
@@ -191,7 +201,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 </section>
 
 <section id="kontakt" style="background: #16181D; color: #F6F5F1">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 56px">
 <div style="display: flex; flex-direction: column; gap: 20px">
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 44px; font-weight: 700; letter-spacing: -0.01em">Kontakt</h2>
 <p style="margin: 0; font-size: 18px; color: #C9CBD1">Erzählen Sie mir, wo es hakt. Ich antworte in der Regel innerhalb eines Werktags.</p>
