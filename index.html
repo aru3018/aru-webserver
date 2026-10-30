@@ -17,6 +17,15 @@ a{color:#0F766E}a:hover{color:#16181D}
 <style>
 html{scroll-behavior:smooth}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #0F766E;outline-offset:3px}
+.lang-toggle{position:relative;display:inline-flex;align-items:center;min-height:44px;width:92px;padding:0;border:1px solid #C9C5BA;border-radius:999px;background:#FFFFFF;cursor:pointer;font:600 14px Inter,system-ui,sans-serif;color:#16181D}
+.lang-toggle .lt-opt{position:relative;z-index:1;flex:1;text-align:center;transition:color .2s}
+.lang-toggle .lt-knob{position:absolute;top:4px;left:4px;width:42px;height:calc(100% - 8px);border-radius:999px;background:#0F766E;transition:transform .2s ease}
+.lang-toggle .lt-opt[data-l="de"]{color:#FFFFFF}
+.lang-toggle[aria-checked="true"] .lt-knob{transform:translateX(42px)}
+.lang-toggle[aria-checked="true"] .lt-opt[data-l="de"]{color:#16181D}
+.lang-toggle[aria-checked="true"] .lt-opt[data-l="en"]{color:#FFFFFF}
+.lang-toggle:focus-visible{outline:2px solid #0F766E;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.lang-toggle .lt-knob,.lang-toggle .lt-opt{transition:none}}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{overflow-x:hidden}
 @media (max-width:600px){
@@ -42,7 +51,10 @@ h1{font-size:44px!important}
 <a href="#ablauf" style="color: #16181D; text-decoration: none">Ablauf</a>
 <a href="#kontakt" style="color: #16181D; text-decoration: none">Kontakt</a>
 </nav>
+<div style="display: flex; align-items: center; gap: 12px">
+<button type="button" id="lang-toggle" class="lang-toggle" role="switch" aria-checked="false" aria-label="Sprache: Englisch einschalten"><span class="lt-opt" data-l="de">DE</span><span class="lt-opt" data-l="en">EN</span><span class="lt-knob" aria-hidden="true"></span></button>
 <a href="#kontakt" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 8px; background: #16181D; color: #F6F5F1; text-decoration: none; font-weight: 600; font-size: 15px">Termin anfragen</a>
+</div>
 </div>
 </header>
 
@@ -227,8 +239,9 @@ document.getElementById('kontakt-form').addEventListener('submit', function (e) 
   var name = document.getElementById('f-name').value.trim();
   var kontakt = document.getElementById('f-mail').value.trim();
   var anliegen = document.getElementById('f-msg').value.trim();
-  var betreff = 'Anfrage über aru-it.ch von ' + name;
-  var text = 'Name: ' + name + '\r\nKontakt: ' + kontakt + '\r\n\r\n' + anliegen;
+  var en = window.aruLang === 'en';
+  var betreff = (en ? 'Enquiry via aru-it.ch from ' : 'Anfrage über aru-it.ch von ') + name;
+  var text = 'Name: ' + name + '\r\n' + (en ? 'Contact: ' : 'Kontakt: ') + kontakt + '\r\n\r\n' + anliegen;
   window.location.href = 'mailto:kontakt@aru-it.ch?subject=' + encodeURIComponent(betreff) + '&body=' + encodeURIComponent(text);
 });
 </script>
@@ -243,5 +256,41 @@ document.getElementById('kontakt-form').addEventListener('submit', function (e) 
 </footer>
 
 </div>
+<script>
+(function () {
+  var EN = {"Leistungen": "Services", "Preise": "Prices", "Ablauf": "How it works", "Kontakt": "Contact", "Termin anfragen": "Book an appointment", "IT-Hilfe für Privatpersonen · Bern": "IT help for private customers · Bern", "Ihre IT läuft.": "Your IT works.", "Sie verstehen sie.": "And you understand it.", "Vom neuen Computer über WLAN und Drucker bis zur Windows-Umstellung – persönlich, verständlich erklärt und fair im Preis. Auf Deutsch, Englisch oder Tamil.": "From a new computer to Wi-Fi, printers and upgrading Windows – personal, clearly explained and fairly priced. In German, English or Tamil.", "Kostenlos anfragen": "Free enquiry", "Preise ansehen": "See prices", "Stundenansatz": "Hourly rate", "pro Stunde · faire Preise, Abrechnung pro 15 Min.": "per hour · fair prices, billed per 15 min.", "Vor Ort": "On site", "Region Bern": "Bern area", "Remote": "Remote", "per Fernwartung": "via remote support", "drei Sprachen": "three languages", "Noch Windows 10? Seit dem 13. Oktober 2026 gibt es keine Sicherheitsupdates mehr.": "Still on Windows 10? Since 13 October 2026 there are no more security updates.", "Ich prüfe Ihr Gerät und stelle auf Windows 11 oder Linux um – inklusive Datensicherung.": "I check your device and move it to Windows 11 or Linux – including a backup of your data.", "Umstellung anfragen": "Request an upgrade", "Für Privatpersonen in Bern und Umgebung – und Webseiten für Selbständige.": "For private customers in and around Bern – and websites for the self-employed.", "Neuer Computer": "New computer", "Kaufberatung, Einrichten und Übernahme Ihrer Daten vom alten Gerät – fertig zum Loslegen.": "Buying advice, setup and transfer of your data from your old device – ready to go.", "Hilfe bei Problemen": "Help with problems", "Langsamer PC, Fehlermeldungen, E-Mail, Handy oder Tablet: Ich finde die Ursache und erkläre sie Ihnen.": "Slow PC, error messages, email, phone or tablet: I find the cause and explain it to you.", "Sicherheit & Windows-Umstellung": "Security & Windows upgrade", "Umstieg von Windows 10 auf 11, Viren-Check und sichere Passwörter.": "Upgrade from Windows 10 to 11, virus check and secure passwords.", "WLAN, Drucker & Backup": "Wi-Fi, printers & backup", "Stabiles Internet zuhause, Drucker einrichten und Ihre Fotos sicher aufbewahren.": "Reliable internet at home, printer setup and keeping your photos safe.", "Webseiten für Selbständige": "Websites for the self-employed", "Moderne, mobilfreundliche Webseite für Ihr kleines Geschäft – inklusive Domain und E-Mail-Adresse.": "A modern, mobile-friendly website for your small business – including domain and email address.", "Feste Pakete für häufige Aufträge, sonst nach Aufwand. Vor jedem Auftrag über CHF 200 erhalten Sie eine Offerte.": "Fixed packages for common jobs, otherwise billed by time. For any job over CHF 200 you get a quote first.", "Computer & Support": "Computer & support", "Stundenansatz vor Ort": "Hourly rate on site", "65 / Std.": "65 / hr", "Fernwartung": "Remote support", "Kaufberatung (bis 45 Min.)": "Buying advice (up to 45 min.)", "Neuer PC einrichten inkl. Datenübernahme": "New PC setup incl. data transfer", "Windows 10 auf 11 inkl. Datensicherung": "Windows 10 to 11 incl. backup", "WLAN oder Drucker einrichten": "Wi-Fi or printer setup", "Sicherheits-Check": "Security check", "Webseiten": "Websites", "Onepager (eine Seite)": "One-pager (single page)", "ab 500": "from 500", "Webseite bis 5 Seiten": "Website up to 5 pages", "ab 1’200": "from 1’200", "Änderungen an bestehender Webseite": "Changes to an existing website", "Hosting & Wartung": "Hosting & maintenance", "auf Anfrage": "on request", "Alle Preise in CHF. Anfahrt Stadt Bern: CHF 10 pauschal, Umgebung nach Absprache. Material, Lizenzen und Domain werden separat verrechnet.": "All prices in CHF. Travel within the city of Bern: CHF 10 flat, surrounding area by arrangement. Hardware, licences and domains are charged separately.", "So läuft es ab": "How it works", "Anfrage": "Enquiry", "Sie beschreiben kurz Ihr Anliegen – per Formular, E-Mail oder Telefon.": "You briefly describe what you need – by form, email or phone.", "Einschätzung": "Assessment", "Ich melde mich mit einer Einschätzung und einem Preis, bevor ich loslege.": "I get back to you with an assessment and a price before I start.", "Umsetzung": "Getting it done", "Vor Ort oder per Fernwartung – und ich erkläre Ihnen, was ich gemacht habe.": "On site or remotely – and I explain what I did.", "Erzählen Sie mir, wo es hakt. Ich antworte in der Regel innerhalb eines Werktags.": "Tell me what the problem is. I usually reply within one working day.", "E-Mail oder Telefon": "Email or phone", "Ihr Anliegen": "Your request", "Anfrage senden": "Send enquiry", "Der Knopf öffnet Ihr E-Mail-Programm mit der fertigen Nachricht. Sie können auch direkt an kontakt@aru-it.ch schreiben.": "The button opens your email app with the message ready to send. You can also write directly to kontakt@aru-it.ch.", "Impressum": "Legal notice", "Datenschutz": "Privacy policy"};
+  var META = {
+    de: { title: document.title, desc: document.querySelector('meta[name=description]').content },
+    en: { title: 'Aru IT-Services – IT help in Bern', desc: 'Personal IT help for private customers in Bern: new computers, troubleshooting, Windows upgrades, Wi-Fi and backup – and websites for the self-employed.' }
+  };
+  var nodes = [];
+  var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (n) {
+      var p = n.parentNode && n.parentNode.nodeName;
+      if (p === 'SCRIPT' || p === 'STYLE') return NodeFilter.FILTER_REJECT;
+      return Object.prototype.hasOwnProperty.call(EN, n.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    }
+  });
+  while (walker.nextNode()) nodes.push({ n: walker.currentNode, de: walker.currentNode.nodeValue });
+  var btn = document.getElementById('lang-toggle');
+  window.aruLang = 'de';
+  function apply(lang) {
+    window.aruLang = lang;
+    nodes.forEach(function (x) {
+      x.n.nodeValue = lang === 'en' ? x.de.replace(x.de.trim(), EN[x.de.trim()]) : x.de;
+    });
+    document.documentElement.lang = lang;
+    document.title = META[lang].title;
+    document.querySelector('meta[name=description]').content = META[lang].desc;
+    btn.setAttribute('aria-checked', lang === 'en' ? 'true' : 'false');
+    btn.setAttribute('aria-label', lang === 'en' ? 'Language: switch to German' : 'Sprache: Englisch einschalten');
+    try { localStorage.setItem('aru-lang', lang); } catch (e) {}
+  }
+  btn.addEventListener('click', function () { apply(window.aruLang === 'en' ? 'de' : 'en'); });
+  var saved = null;
+  try { saved = localStorage.getItem('aru-lang'); } catch (e) {}
+  if (saved === 'en') apply('en');
+})();
+</script>
 </body>
 </html>
